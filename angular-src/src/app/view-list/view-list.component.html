@@ -1,0 +1,74 @@
+
+<div class="container">
+  <!--<form class="form-group" style="text-align:right">
+  <div>
+    <select class="form-control" name="order" onchange="sort=this.value;">
+      <option value="priority">sort by priority</option>
+      <option value="alphabetize">sort by A-Z</option>
+    </select>
+  </div>
+</form> -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Priority Level</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let list of lists">
+      <td>{{list.category}}</td>
+      <td>{{list.title}}</td>
+      <td>{{list.description}}</td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteList(list);
+        $event.stopPropagation();">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<form  (ngSubmit)="onSubmit()" #listForm = "ngForm" class = "well">
+  <div class="form-group">
+    <label for="title">Title*</label>
+    <input  id="title" name="title"  class="form-control" required type="text" [(ngModel)]="newList.title" #title="ngModel">
+    <div *ngIf="title.invalid && (title.dirty || title.touched)"
+     class="alert alert-danger">
+    Title is required.
+</div>
+  </div>
+  <br>
+
+  <div class="form-group">
+    <label for="category" >Category*</label>
+    <select class="form-control" id="category" placeholder="Set the priority" required  [(ngModel)]="newList.category" name="category" #category="ngModel">
+      <option value = "high" >high</option>
+      <option value ="medium">medium</option>
+      <option value="low">low</option>
+    </select>
+    <div *ngIf="category.invalid && (category.dirty || category.touched)"
+     class="alert alert-danger">
+    Category is required.
+</div>
+</div>
+
+  <!--
+  <mat-form-field>
+  <mat-select placeholder = 'category' name="category" required [(ngModel)]="newList.category">
+    <mat-option  value="high">high</mat-option>
+    <mat-option  value="medium">medium</mat-option>
+    <mat-option  value="low">low</mat-option>
+  </mat-select>
+</mat-form-field>
+-->
+
+  <br><br>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input id="description" class="form-control" type="text"[(ngModel)]="newList.description" name="description">
+  </div>
+  <br>
+  <button class="btn btn-success" type="submit" (click)="add(newList); listForm.reset()" [disabled]="!listForm.form.valid">Save</button>
+</form>
+</div>
